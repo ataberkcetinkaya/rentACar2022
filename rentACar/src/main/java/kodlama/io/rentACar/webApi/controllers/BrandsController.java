@@ -31,7 +31,7 @@ public class BrandsController {
 	}
 	
 	@PostMapping()
-	@ResponseStatus(code = HttpStatus.CREATED) //200
+	@ResponseStatus(code = HttpStatus.CREATED) //201
 	public void add(CreateBrandRequest createBrandRequest) {
 		this.brandService.add(createBrandRequest);
 	}

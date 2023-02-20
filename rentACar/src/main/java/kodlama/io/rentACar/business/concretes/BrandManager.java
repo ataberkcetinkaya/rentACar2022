@@ -47,7 +47,7 @@ public class BrandManager implements BrandService {
 		
 		//code after using mapper...
 		List<GetAllBrandsResponse> brandsResponse = 
-				brands.stream().map(brand -> this.modelMapperService.forResponse().map(brand, GetAllBrandsResponse.class)).collect(Collectors.toList()); //Loop through the list with stream map
+				brands.stream().map(brand -> modelMapperService.forResponse().map(brand, GetAllBrandsResponse.class)).collect(Collectors.toList()); //Loop through the list with stream map
 		
 		
 			return brandsResponse;
@@ -63,7 +63,7 @@ public class BrandManager implements BrandService {
 		 */
 		
 		//code after using mapper...
-		Brand brand = this.modelMapperService.forRequest().map(createBrandRequest, Brand.class); //will turn createBrandRequest into a Brand entity
+		Brand brand = modelMapperService.forRequest().map(createBrandRequest, Brand.class); //will turn createBrandRequest into a Brand entity
 		this.brandRepository.save(brand);
 	}
 }
