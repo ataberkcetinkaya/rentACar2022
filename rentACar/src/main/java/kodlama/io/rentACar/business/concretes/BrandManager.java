@@ -1,6 +1,5 @@
 package kodlama.io.rentACar.business.concretes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import kodlama.io.rentACar.business.abstracts.BrandService;
 import kodlama.io.rentACar.business.requests.CreateBrandRequest;
+import kodlama.io.rentACar.business.requests.UpdateBrandRequest;
 import kodlama.io.rentACar.business.responses.GetAllBrandsResponse;
+import kodlama.io.rentACar.business.responses.GetByIdBrandResponse;
 import kodlama.io.rentACar.core.utilities.mappers.ModelMapperService;
 import kodlama.io.rentACar.dataAccess.abstracts.BrandRepository;
 import kodlama.io.rentACar.entities.concretes.Brand;
@@ -49,7 +50,6 @@ public class BrandManager implements BrandService {
 		List<GetAllBrandsResponse> brandsResponse = 
 				brands.stream().map(brand -> modelMapperService.forResponse().map(brand, GetAllBrandsResponse.class)).collect(Collectors.toList()); //Loop through the list with stream map
 		
-		
 			return brandsResponse;
 	}
 
@@ -65,5 +65,24 @@ public class BrandManager implements BrandService {
 		//code after using mapper...
 		Brand brand = modelMapperService.forRequest().map(createBrandRequest, Brand.class); //will turn createBrandRequest into a Brand entity
 		this.brandRepository.save(brand);
+	}
+
+	@Override
+	public GetByIdBrandResponse getById(int id) {
+		Brand brand = brandRepository.findById(id).orElseThrow(); //if u cannot find, throw an error
+		GetByIdBrandResponse getByIdBrandResponse = modelMapperService.forResponse().map(brand, GetByIdBrandResponse.class);
+		
+		return getByIdBrandResponse;
+	}
+
+	@Override
+	public void update(UpdateBrandRequest updateBrandRequest) {
+		Brand brand = modelMapperService.forRequest().map(updateBrandRequest, Brand.class); //mapped w updateBrandRequest
+		brandRepository.save(brand);
+	}
+
+	@Override
+	public void delete(int id) {
+		brandRepository.deleteById(id);
 	}
 }
