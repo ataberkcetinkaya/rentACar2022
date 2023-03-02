@@ -30,6 +30,7 @@ public class Brand {
 	@Column(name="name")
 	private String name;
 	
-	@OneToMany(mappedBy = "brand") //look for class its Brand, it can be "One" and "Many" brands. So its @OneToMany
+	//mappedBy = "brand" > stands for the "Brand brand" in Model class.
+	@OneToMany(mappedBy = "brand") //look for class its Brand, it can be "One" and "Many" models related w brand here. So its @OneToMany
 	List<Model> models; //can be many models related to only one brand
 }

@@ -27,7 +27,7 @@ public class Model {
 	@Column(name="name")
 	private String name;
 	
-	@ManyToOne
+	@ManyToOne //@ManyToOne bc of can be many models here related to the one brand
 	@JoinColumn(name="brand_id") //this part will be added to the db with the name of brand_id (brand_id will be related with Brand)
 	private Brand brand; //can be only one brand for many models
 }
