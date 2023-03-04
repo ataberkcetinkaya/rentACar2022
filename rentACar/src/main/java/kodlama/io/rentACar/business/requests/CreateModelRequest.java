@@ -11,9 +11,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateBrandRequest {
+public class CreateModelRequest {
 	@NotNull //null validation
 	@NotBlank
 	@Size(min = 3, max=20)
 	private String name;
+	@NotNull //null validation
+	@NotBlank
+	private int brandId;
+	
+	//javax.validation.constraints >> search in google for more
 }

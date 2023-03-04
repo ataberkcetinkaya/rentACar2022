@@ -11,6 +11,7 @@ import kodlama.io.rentACar.business.requests.CreateBrandRequest;
 import kodlama.io.rentACar.business.requests.UpdateBrandRequest;
 import kodlama.io.rentACar.business.responses.GetAllBrandsResponse;
 import kodlama.io.rentACar.business.responses.GetByIdBrandResponse;
+import kodlama.io.rentACar.business.rules.BrandBusinessRules;
 import kodlama.io.rentACar.core.utilities.mappers.ModelMapperService;
 import kodlama.io.rentACar.dataAccess.abstracts.BrandRepository;
 import kodlama.io.rentACar.entities.concretes.Brand;
@@ -20,12 +21,14 @@ public class BrandManager implements BrandService {
 
 	private BrandRepository brandRepository;
 	private ModelMapperService modelMapperService; //injecting to use
+	private BrandBusinessRules brandBusinessRules;
 	
 	@Autowired //autowired looks for the parameter and scans the project for who implements that interface and runs w that (new's it)
-	public BrandManager(BrandRepository brandRepository, ModelMapperService modelMapperService) { //can get InMemory, Hibernate etc.
+	public BrandManager(BrandRepository brandRepository, ModelMapperService modelMapperService, BrandBusinessRules brandBusinessRules) { //can get InMemory, Hibernate etc.
 		super();
 		this.brandRepository = brandRepository;
 		this.modelMapperService = modelMapperService;
+		this.brandBusinessRules = brandBusinessRules;
 	}
 
 	@Override
@@ -63,6 +66,7 @@ public class BrandManager implements BrandService {
 		 */
 		
 		//code after using mapper...
+		brandBusinessRules.checkIfBrandNameExists(createBrandRequest.getName()); //our rule from Rules package
 		Brand brand = modelMapperService.forRequest().map(createBrandRequest, Brand.class); //will turn createBrandRequest into a Brand entity
 		this.brandRepository.save(brand);
 	}
