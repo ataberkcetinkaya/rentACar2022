@@ -33,6 +33,7 @@ public class ModelManager implements ModelService {
 	@Override
 	public void add(CreateModelRequest createModelRequest) {
 		Model model = modelMapperService.forRequest().map(createModelRequest, Model.class); //will turn createModelRequest into a Model entity
+		model.setId(0); //might be some probems with mapping(ModelMapper) about updating the prev one instead adding new one, so reset the ID here.
 		this.modelRepository.save(model);
 		
 	}
